@@ -5,8 +5,6 @@ import time
 
 import utils
 
-import random
-
 def get_weather_data():
     url = "https://community-open-weather-map.p.rapidapi.com/weather"
 
