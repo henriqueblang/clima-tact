@@ -8,6 +8,7 @@ air_conditioner_status = -1
 def on_message(client, userdata, message):
     message = str(message.payload.decode("utf-8"))
 
+    global air_conditioner_status
     if message == "420;1":
         print("Turning humidifier on.")
 
