@@ -2,19 +2,6 @@ import paho.mqtt.client as mqtt
 import time
 
 import utils
-'''
-topic = "test.mosquitto.org"
-
-client = mqtt.Client("Smartphone")
-client.connect(topic)
-
-while True:
-    r = uniform(20.0, 21.0)
-
-    client.publish("henriqueblang", r)
-    print(f"published: {r}")
-    time.sleep(1)
-'''
 
 weather_data = []
 

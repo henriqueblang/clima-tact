@@ -3,23 +3,6 @@ import time
 
 import utils
 
-'''
-def on_message(client, userdata, message):
-    print("received message: " , str(message.payload.decode("utf-8")))
-
-mqttBroker ="test.mosquitto.org"
-
-client = mqtt.Client("smartphone")
-client.connect(mqttBroker) 
-client.loop_start()
-
-while True:
-    client.subscribe("henriqueblang")
-    client.on_message=on_message 
-
-client.loop_stop()
-'''
-
 def on_message(client, userdata, message):
     message = str(message.payload.decode("utf-8"))
 
