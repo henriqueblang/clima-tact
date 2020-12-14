@@ -5,6 +5,8 @@ import time
 
 import utils
 
+import random
+
 def get_weather_data():
     url = "https://community-open-weather-map.p.rapidapi.com/weather"
 
@@ -29,7 +31,7 @@ def get_weather_data():
 
 if __name__ == "__main__":
 
-    client = mqtt.Client("Projeto")
+    client = mqtt.Client("Projeto_1")
     client.connect(utils.TOPIC)
 
     print("Connected!")

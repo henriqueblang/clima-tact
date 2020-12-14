@@ -6,17 +6,20 @@ import utils
 weather_data = []
 
 last_ac_temperature = None
-last_humidifier_status = None   
+last_humidifier_status = None
+
+aux_client = mqtt.Client("Projeto_4")
+aux_client.connect(utils.TOPIC)
 
 def on_message(client, userdata, message):
     message = str(message.payload.decode("utf-8"))
 
     humidity, temperature = message.split(";")
 
-    humidity = float(humidity)
+    humidity =    float(humidity)
     temperature = float(temperature)
 
-    print(f"[processer] Received humidity: {humidity}, temperature: {temperature}")
+    print(f"[processor] Received humidity: {humidity}, temperature: {temperature}")
 
     weather_data.append((humidity, temperature))
 
@@ -33,8 +36,9 @@ def on_message(client, userdata, message):
     mean_humidity /= utils.DATA_PROCESS_AMOUNT
     mean_temperature /= utils.DATA_PROCESS_AMOUNT
 
-    ac_temperature = utils.AIR_CONDITIONER_PERCENTAGE * mean_temperature
+    ac_temperature = round(utils.AIR_CONDITIONER_PERCENTAGE * mean_temperature)
 
+    global last_ac_temperature
     if last_ac_temperature is None:
         last_ac_temperature = ac_temperature + 1
 
@@ -42,23 +46,28 @@ def on_message(client, userdata, message):
     ac_linear_temperatures = [i for i in range(last_ac_temperature + step, ac_temperature + step, step)]
 
     for temperature in ac_linear_temperatures:
-        client.publish("henriqueblang/gadgets", str(temperature) + ";0")
+        aux_client.publish("henriqueblang/gadgets", str(temperature) + ";0")
 
         time.sleep(1)
 
+    global last_humidifier_status
     if mean_humidity < utils.HUMIDIFIER_LOWER_THRESHOLD and last_humidifier_status != -1:
         last_humidifier_status = -1
 
-        client.publish("henriqueblang/gadgets", "-1;-1")
+        aux_client.publish("henriqueblang/gadgets", "-1;-1")
 
     elif mean_humidity > utils.HUMIDIFIER_UPPER_THRESHOLD and last_humidifier_status != 1:
         last_humidifier_status = 1
 
-        client.publish("henriqueblang/gadgets", "-1;1")
+        aux_client.publish("henriqueblang/gadgets", "-1;1")
+
+    last_ac_temperature = ac_temperature
+
+    weather_data.clear()
 
 if __name__ == "__main__":
 
-    client = mqtt.Client("Projeto")
+    client = mqtt.Client("Projeto_2")
     client.connect(utils.TOPIC)
 
     print("Connected!")
