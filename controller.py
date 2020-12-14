@@ -42,8 +42,6 @@ def on_message(client, userdata, message):
     elif humidifier == 1:
         humidifier_status = "on"
 
-    print(f"[controller] Received humidifier: {humidifier_status}, temperature: {temperature}")
-
     if temperature > -1 and air_conditioner_flag:
         print(f"Setting air conditioner to {temperature}°C.")
 
