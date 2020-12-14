@@ -51,12 +51,12 @@ def on_message(client, userdata, message):
         time.sleep(1)
 
     global last_humidifier_status
-    if mean_humidity < utils.HUMIDIFIER_LOWER_THRESHOLD and last_humidifier_status != -1:
+    if mean_humidity < utils.HUMIDIFIER_LOWER_THRESHOLD and last_humidifier_status != 1:
         last_humidifier_status = 1
 
         aux_client.publish("henriqueblang/gadgets", "-1;1")
 
-    elif mean_humidity > utils.HUMIDIFIER_UPPER_THRESHOLD and last_humidifier_status != 1:
+    elif mean_humidity > utils.HUMIDIFIER_UPPER_THRESHOLD and last_humidifier_status != -1:
         last_humidifier_status = -1
 
         aux_client.publish("henriqueblang/gadgets", "-1;-1")
