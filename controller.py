@@ -3,12 +3,12 @@ import time
 
 import utils
 
-air_conditioner_status = -1
+air_conditioner_flag = False
 
 def on_message(client, userdata, message):
     message = str(message.payload.decode("utf-8"))
 
-    global air_conditioner_status
+    global air_conditioner_flag
     if message == "420;1":
         print("Turning humidifier on.")
 
@@ -18,14 +18,14 @@ def on_message(client, userdata, message):
 
         return
     elif message == "690;1":
-        air_conditioner_status = 1
-
+        air_conditioner_flag = True
+    
         print("Turning air conditioner on.")
 
         return
     elif message == "690;-1":
-        air_conditioner_status = -1
-
+        air_conditioner_flag = False
+        
         print("Turning air conditioner off.")
 
         return
@@ -44,12 +44,7 @@ def on_message(client, userdata, message):
 
     print(f"[controller] Received humidifier: {humidifier_status}, temperature: {temperature}")
 
-    if temperature > -1:
-        if air_conditioner_status == -1:
-            air_conditioner_status = 1
-
-            print("Turning air conditioner on.")
-
+    if temperature > -1 and air_conditioner_flag:
         print(f"Setting air conditioner to {temperature}°C.")
 
     if humidifier_status != "unchanged":
