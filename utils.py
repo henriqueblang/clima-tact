@@ -10,7 +10,7 @@ DATA_PROCESS_AMOUNT = 5
 AIR_CONDITIONER_PERCENTAGE = 0.8
 
 # Humidity below this level will turn the humidifier on
-HUMIDIFIER_LOWER_THRESHOLD = 40
+HUMIDIFIER_LOWER_THRESHOLD = 50
 
 # Humidity above this level will turn the humidifier off
-HUMIDIFIER_UPPER_THRESHOLD = 60
+HUMIDIFIER_UPPER_THRESHOLD = 80
